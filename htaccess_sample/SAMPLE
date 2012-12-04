@@ -1,0 +1,38 @@
+
+### SILVERSTRIPE START ###
+<Files *.ss>
+Order deny,allow
+Deny from all
+Allow from 127.0.0.1
+</Files>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+
+### SILVERSTRIPE END ###
+# Cached content - pw/ss subdirectory
+RewriteCond %{REQUEST_METHOD} ^GET$
+RewriteCond %{QUERY_STRING} ^$
+RewriteCond %{REQUEST_URI} ^/pw/ss/(.*)$
+RewriteCond %{REQUEST_URI} /pw/ss/(.*[^/])/?$
+RewriteCond %{DOCUMENT_ROOT}/pw/ss/cache/%1.php -f
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* /pw/ss/cache/%1.php [L]
+
+# Cached content - homepage
+RewriteCond %{REQUEST_METHOD} ^GET$
+RewriteCond %{QUERY_STRING} ^$
+RewriteCond %{REQUEST_URI} ^/pw/ss/?$
+RewriteCond /pw/ss/cache/index.php -f
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* /pw/ss/cache/index.php [L]
+
+# Dynamic content
+RewriteCond %{REQUEST_URI} !(\.gif)|(\.jpg)|(\.png)|(\.css)|(\.js)|(\.php)$
+RewriteCond %{REQUEST_URI} ^(.*)$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* /pw/ss/sapphire/main.php?url=%1&%{QUERY_STRING} [L]
+### SILVERSTRIPE END ###
+
+## CONFIG FOR TEST/LIVE ENVIRONMENTS
