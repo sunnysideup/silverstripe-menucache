@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe/menucache",
+	"name": "sunnysideup/menucache",
 	"type": "silverstripe-module",
 	"description": "cache your silverstripe menu (and other parts of your website) to decrease the load on your server and make your website loading speeds faster",
 	"homepage": "http://www.silverstripe-webdevelopment.com",
