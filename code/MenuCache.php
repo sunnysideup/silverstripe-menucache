@@ -1,10 +1,18 @@
 <?php
 
-class MenuCache extends DataObjectDecorator {
+class MenuCache extends DataExtension {
 	/**
 	* fields are typicall header, menu, footer
 	*/
 
+	protected static $db = array(
+		"CachedSection0" => "HTMLText",
+		"CachedSection1" => "HTMLText",
+		"CachedSection2" => "HTMLText",
+		"CachedSection3" => "HTMLText",
+		"CachedSection4" => "HTMLText"
+	)
+	
 	protected static $fields = array(
 		0 => "Header",
 		1 => "Menu",
@@ -22,19 +30,7 @@ class MenuCache extends DataObjectDecorator {
 
 	protected static $tables_to_clear = array("SiteTree", "SiteTree_Live", "SiteTree_versions");
 		static function get_tables_to_clear() {return self::$tables_to_clear;}
-
-	function extraStatics(){
-		$dbArray = array(
-			"DoNotCacheMenu" => "Boolean"
-		);
-		foreach(self::$fields as $key => $field) {
-			$dbArray[self::field_maker($key)]  = "HTMLText";
-		}
-		return array(
-			'db' =>  $dbArray
-		);
-	}
-
+	
 	public static function field_maker($fieldNumber) {
 		return "CachedSection".$fieldNumber;
 	}
@@ -43,7 +39,7 @@ class MenuCache extends DataObjectDecorator {
 		return (isset(self::$fields[$number]));
 	}
 
-	function updateCMSFields(FieldSet &$fields) {
+	function updateCMSFields(FieldList $fields) {
 		$fields->addFieldToTab("Root.Caching", new CheckboxField("DoNotCacheMenu","Do Not Cache Menu"));
 		$fields->addFieldToTab("Root.Caching", new LiteralField("ClearCache","<a href=\"".$this->owner->Link("clearallfieldcaches")."\">clear cache (do this at the end of all edit sessions)</a>"));
 		return $fields;
@@ -62,11 +58,11 @@ class MenuCache extends DataObjectDecorator {
 			foreach(self::get_tables_to_clear() as $table) {
 				$msg = '';
 				$sql = "UPDATE {$bt}".$table."{$bt} SET ".implode(", ", $fieldsToClear);
-				if(Director::URLParam("ID") == "days" && $days = intval(Director::URLParam("OtherID"))) {
+				if( Controller::curr()->getRequest()->param("ID") == "days" && $days = intval(Controller::curr()->getRequest()->param("OtherID"))) {
 					$sql .= ' WHERE {$bt}LastEdited{$bt} > ( NOW() - INTERVAL '.$days.' DAY )';
 					$msg .= ', created before the last '.$days.' days';
 				}
-				elseif(Director::URLParam("ID") == "thispage") {
+				elseif(Controller::curr()->getRequest()->param("ID") == "thispage") {
 					$sql .= " WHERE  {$bt}".$table."{$bt}.{$bt}ID{$bt} = ".$this->owner->ID;
 					$msg .= ', for page with ID = '.$this->owner->ID;
 				}
