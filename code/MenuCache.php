@@ -11,7 +11,7 @@ class MenuCache extends DataExtension {
 		"CachedSection2" => "HTMLText",
 		"CachedSection3" => "HTMLText",
 		"CachedSection4" => "HTMLText"
-	)
+	);
 	
 	protected static $fields = array(
 		0 => "Header",
