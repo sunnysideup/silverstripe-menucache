@@ -12,7 +12,7 @@ class MenuCache extends DataExtension {
 		"CachedSection3" => "HTMLText",
 		"CachedSection4" => "HTMLText"
 	);
-	
+
 	protected static $fields = array(
 		0 => "Header",
 		1 => "Menu",
@@ -30,7 +30,7 @@ class MenuCache extends DataExtension {
 
 	protected static $tables_to_clear = array("SiteTree", "SiteTree_Live", "SiteTree_versions");
 		static function get_tables_to_clear() {return self::$tables_to_clear;}
-	
+
 	public static function field_maker($fieldNumber) {
 		return "CachedSection".$fieldNumber;
 	}
@@ -48,22 +48,21 @@ class MenuCache extends DataExtension {
 	//-------------------- menu cache ------------------ ------------------ ------------------ ------------------ ------------------ ------------------
 
 	function clearfieldcache ($showoutput = false) {
-		$bt = defined('DB::USE_ANSI_SQL') ? "\"" : "`";
 		$fieldsToClear = array();
 		foreach(self::get_fields() as $key => $field) {
 			$fieldName = self::field_maker($key);
-			$fieldsToClear[] = "{$bt}".$fieldName."{$bt} = ''";
+			$fieldsToClear[] = "\"".$fieldName."\" = ''";
 		}
 		if(count($fieldsToClear)) {
 			foreach(self::get_tables_to_clear() as $table) {
 				$msg = '';
-				$sql = "UPDATE {$bt}".$table."{$bt} SET ".implode(", ", $fieldsToClear);
+				$sql = "UPDATE \"".$table."\" SET ".implode(", ", $fieldsToClear);
 				if( Controller::curr()->getRequest()->param("ID") == "days" && $days = intval(Controller::curr()->getRequest()->param("OtherID"))) {
-					$sql .= ' WHERE {$bt}LastEdited{$bt} > ( NOW() - INTERVAL '.$days.' DAY )';
+					$sql .= ' WHERE \"LastEdited\" > ( NOW() - INTERVAL '.$days.' DAY )';
 					$msg .= ', created before the last '.$days.' days';
 				}
 				elseif(Controller::curr()->getRequest()->param("ID") == "thispage") {
-					$sql .= " WHERE  {$bt}".$table."{$bt}.{$bt}ID{$bt} = ".$this->owner->ID;
+					$sql .= " WHERE  \"".$table."\".\"ID\" = ".$this->owner->ID;
 					$msg .= ', for page with ID = '.$this->owner->ID;
 				}
 				if($showoutput) {
@@ -103,7 +102,6 @@ class MenuCache_Controller extends Extension {
 	}
 
 	function CachedField($fieldNumber) {
-		$bt = defined('DB::USE_ANSI_SQL') ? "\"" : "`";
 		$fieldName = MenuCache::field_maker($fieldNumber);
 		if(isset($_REQUEST["flush"])) {
 			$this->owner->clearfieldcache();
@@ -115,7 +113,7 @@ class MenuCache_Controller extends Extension {
 			if(!$this->owner->$fieldName || $this->owner->DoNotCacheMenu) {
 				$fieldID = $fieldNumber;
 				$content = $this->getHtml($fieldNumber);
-				$sql = "Update {$bt}SiteTree_Live{$bt} Set {$bt}".$fieldName."{$bt} = '".$this->compressAndPrepareHTML($content)."' WHERE {$bt}ID{$bt} = ".$this->owner->ID." LIMIT 1";
+				$sql = "Update \"SiteTree_Live\" Set \"".$fieldName."\" = '".$this->compressAndPrepareHTML($content)."' WHERE \"ID\" = ".$this->owner->ID." LIMIT 1";
 				DB::query($sql);
 				return $content;
 			}
