@@ -2,17 +2,17 @@
 
 class MenuCacheStatic extends DataExtension {
 
-	protected static $class_names_to_cache = array();
+	private static $class_names_to_cache = array();
 		static function add_class_name_to_cache($className) {self::$class_names_to_cache[$className] = $className;}
 
-	protected static $class_names_NOT_to_cache = array();
+	private static $class_names_NOT_to_cache = array();
 		static function remove_class_name_from_cache($className) {self::$class_names_NOT_to_cache[$className] = $className;}
 		static function get_class_names_NOT_to_cache($className) {
 			self::$class_names_NOT_to_cache["UserDefinedForm"] = "UserDefinedForm";
 			return self::$class_names_NOT_to_cache;
 		}
 
-	protected static $custom_urls_to_add = array();
+	private static $custom_urls_to_add = array();
 		static function add_custom_url_to_cache($url) {self::$custom_urls_to_add[$url] = $url;}
 
 	function updateCMSFields(FieldList $fields) {
@@ -30,7 +30,8 @@ class MenuCacheStatic extends DataExtension {
 		$urls = array();
 		// memory intensive depending on number of pages
 		foreach(self::$class_names_to_cache as $className) {
-			$pages = $className::get()->exclude(array("ClassName" => self::$class_names_NOT_to_cache));
+			$pages = $className::get()
+				->exclude(array("ClassName" => self::$class_names_NOT_to_cache));
 			if($pages->count()) {
 				foreach($pages as $page) {
 					$urls = array_merge($urls, (array)$page->subPagesToCache());

@@ -5,7 +5,7 @@ class MenuCache extends DataExtension {
 	* fields are typicall header, menu, footer
 	*/
 
-	protected static $db = array(
+	private static $db = array(
 		"CachedSection0" => "HTMLText",
 		"CachedSection1" => "HTMLText",
 		"CachedSection2" => "HTMLText",
@@ -13,7 +13,7 @@ class MenuCache extends DataExtension {
 		"CachedSection4" => "HTMLText"
 	);
 
-	protected static $fields = array(
+	private static $fields = array(
 		0 => "Header",
 		1 => "Menu",
 		2 => "Footer",
@@ -24,11 +24,11 @@ class MenuCache extends DataExtension {
 		static function get_fields() {return self::$fields;}
 
 	/* sets the cache number used for getting the "$Layout" of the individual page */
-	protected static $layout_field = 3;
+	private static $layout_field = 3;
 		static function set_layout_field($number) {self::$layout_field = $number;}
 		static function get_layout_field() {return self::$layout_field;}
 
-	protected static $tables_to_clear = array("SiteTree", "SiteTree_Live", "SiteTree_versions");
+	private static $tables_to_clear = array("SiteTree", "SiteTree_Live", "SiteTree_versions");
 		static function get_tables_to_clear() {return self::$tables_to_clear;}
 
 	public static function field_maker($fieldNumber) {
@@ -86,7 +86,7 @@ class MenuCache extends DataExtension {
 
 class MenuCache_Controller extends Extension {
 
-	public static $allowed_actions = array("showcachedfield","clearfieldcache","showuncachedfield", "clearallfieldcaches");
+	private static $allowed_actions = array("showcachedfield","clearfieldcache","showuncachedfield", "clearallfieldcaches");
 
 	protected function getHtml($fieldNumber) {
 		if(MenuCache::get_layout_field() == $fieldNumber) {
