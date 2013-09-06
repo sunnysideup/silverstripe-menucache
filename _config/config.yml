@@ -1,0 +1,8 @@
+SiteTree:
+  extensions:
+    - MenuCache
+
+ContentController:
+  extensions:
+    - MenuCache_Controller
+
