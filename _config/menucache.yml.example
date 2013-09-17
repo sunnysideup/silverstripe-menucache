@@ -1,4 +1,6 @@
-
+#########################################
+# START MENUCACHE
+#########################################
 MenuCache:
   fields:
     - Header
@@ -11,3 +13,7 @@ MenuCache:
   layout_field: 3
 
 #NOTA BENE - MAKE SURE TO SET TO ANYTHING BUT 0-4 IF YOU DO NOT INCLUDE A LAYOUT SECTION!
+#########################################
+# END MENUCACHE
+#########################################
+

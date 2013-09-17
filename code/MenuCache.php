@@ -20,16 +20,11 @@ class MenuCache extends DataExtension {
 		3 => "LayoutSection",
 		4 => "other",
 	);
-		static function set_fields(array $array) {self::$fields = $array;}
-		static function get_fields() {return self::$fields;}
 
 	/* sets the cache number used for getting the "$Layout" of the individual page */
 	private static $layout_field = 3;
-		static function set_layout_field($number) {self::$layout_field = $number;}
-		static function get_layout_field() {return self::$layout_field;}
 
 	private static $tables_to_clear = array("SiteTree", "SiteTree_Live", "SiteTree_versions");
-		static function get_tables_to_clear() {return self::$tables_to_clear;}
 
 	public static function field_maker($fieldNumber) {
 		return "CachedSection".$fieldNumber;
@@ -49,12 +44,12 @@ class MenuCache extends DataExtension {
 
 	function clearfieldcache ($showoutput = false) {
 		$fieldsToClear = array();
-		foreach(self::get_fields() as $key => $field) {
+		foreach($this->owner->Config()->get("fields") as $key => $field) {
 			$fieldName = self::field_maker($key);
 			$fieldsToClear[] = "\"".$fieldName."\" = ''";
 		}
 		if(count($fieldsToClear)) {
-			foreach(self::get_tables_to_clear() as $table) {
+			foreach($this->owner->Config()->get("tables_to_clear") as $table) {
 				$msg = '';
 				$sql = "UPDATE \"".$table."\" SET ".implode(", ", $fieldsToClear);
 				if( Controller::curr()->getRequest()->param("ID") == "days" && $days = intval(Controller::curr()->getRequest()->param("OtherID"))) {
@@ -89,7 +84,7 @@ class MenuCache_Controller extends Extension {
 	private static $allowed_actions = array("showcachedfield","clearfieldcache","showuncachedfield", "clearallfieldcaches");
 
 	protected function getHtml($fieldNumber) {
-		if(MenuCache::get_layout_field() == $fieldNumber) {
+		if($this->owner->Config()->get("layout_field") == $fieldNumber) {
 			$className = $this->owner->ClassName;
 			if("Page" == $className) {
 				$className = "PageCached";
