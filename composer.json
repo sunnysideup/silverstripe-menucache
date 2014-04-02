@@ -2,7 +2,7 @@
 	"name": "sunnysideup/menucache",
 	"type": "silverstripe-module",
 	"description": "cache your silverstripe menu (and other parts of your website) to decrease the load on your server and make your website loading speeds faster",
-	"homepage": "http://www.silverstripe-webdevelopment.com",
+	"homepage": "https://github.com/sunnysideup/silverstripe-menucache",
 	"keywords": ["menucache", "silverstripe"],
 	"license": "Sunny Side Up (BSD-3-Clause and CUSTOM)",
 	"authors":[
@@ -15,6 +15,9 @@
 	],
 	"require":{
 		"silverstripe/framework": "~3.1",
-		"silverstripe/cms": "~3.1"
+		"silverstripe/cms": "~3.1",
+	},
+	"extra": {
+		"installer-name": "menucache"
 	}
 }
