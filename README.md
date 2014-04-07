@@ -1,6 +1,6 @@
-###############################################
+
 MenuCache
-###############################################
+================================================================================
 
 Allows you to cache parts of your website for
 faster rendering.  A typical example is a long menu
