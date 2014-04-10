@@ -31,7 +31,8 @@ class MenuCache extends DataExtension {
 	}
 
 	public static function fields_exists($number) {
-		return (isset(self::$fields[$number]));
+		$fields = Config->inst()->get("MenuCache", "fields");
+		return (isset($fields[$number]));
 	}
 
 	function updateCMSFields(FieldList $fields) {
