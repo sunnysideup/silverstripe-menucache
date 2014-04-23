@@ -1,1 +1,3 @@
-<% include CachedField4 %>
+<!-- caching starts here -->
+<% include LatestNews %>
+<!-- caching ends here -->

@@ -1,1 +1,3 @@
-<% include CachedField0 %>
+<!-- caching starts here -->
+<% include CachedPageHeader %>
+<!-- caching ends here -->
