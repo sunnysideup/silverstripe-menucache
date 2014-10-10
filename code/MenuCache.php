@@ -44,12 +44,14 @@ class MenuCache extends DataExtension {
 
 	function clearfieldcache ($showoutput = false) {
 		$fieldsToClear = array();
-		foreach($this->owner->Config()->get("fields") as $key => $field) {
+		$fieldsForEach = Config::inst()->get("MenuCache", "fields");
+		foreach($fieldsForEach as $key => $field) {
 			$fieldName = self::field_maker($key);
 			$fieldsToClear[] = "\"".$fieldName."\" = ''";
 		}
 		if(count($fieldsToClear)) {
-			foreach($this->owner->Config()->get("tables_to_clear") as $table) {
+			$tablesForEach = Config::inst()->get("MenuCache", "tables_to_clear");
+			foreach($tablesForEach as $table) {
 				$msg = '';
 				$sql = "UPDATE \"".$table."\" SET ".implode(", ", $fieldsToClear);
 				if( Controller::curr()->getRequest()->param("ID") == "days" && $days = intval(Controller::curr()->getRequest()->param("OtherID"))) {
@@ -84,7 +86,8 @@ class MenuCache_Controller extends Extension {
 	private static $allowed_actions = array("showcachedfield","clearfieldcache","showuncachedfield", "clearallfieldcaches");
 
 	protected function getHtml($fieldNumber) {
-		if($this->owner->Config()->get("layout_field") == $fieldNumber) {
+		$layoutField = Config::inst()->get("MenuCache", "layout_field");
+		if($layoutField == $fieldNumber) {
 			$className = $this->owner->ClassName;
 			if("Page" == $className) {
 				$className = "PageCached";
