@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="MenuCacheStatic" namespace="" name="MenuCacheStatic" abstract="false" final="false" start="3" end="76">
+  <file path="/var/www/_modules/menucache/trunk/docs/en/phpdox/../../../code" file="MenuCacheStatic.php" realpath="/var/www/_modules/menucache/trunk/code/MenuCacheStatic.php" size="2712" time="2015-03-14T10:23:09+13:00" unixtime="1426281789" sha1="841f19ed05ed73dbccecf4b975b1bcf648999c44" relative="code/MenuCacheStatic.php"/>
+  <extends full="DataExtension" namespace="" name="DataExtension"/>
+  <member name="class_names_to_cache" type="array" visibility="private" line="5"/>
+  <method name="add_class_name_to_cache" start="6" end="6" abstract="false" final="false" static="true" visibility="public">
+    <parameter name="className" byreference="false" type="{unknown}"/>
+  </method>
+  <member name="class_names_NOT_to_cache" type="array" visibility="private" line="8"/>
+  <method name="remove_class_name_from_cache" start="9" end="9" abstract="false" final="false" static="true" visibility="public">
+    <parameter name="className" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="get_class_names_NOT_to_cache" start="10" end="13" abstract="false" final="false" static="true" visibility="public">
+    <parameter name="className" byreference="false" type="{unknown}"/>
+  </method>
+  <member name="custom_urls_to_add" type="array" visibility="private" line="15"/>
+  <method name="add_custom_url_to_cache" start="16" end="16" abstract="false" final="false" static="true" visibility="public">
+    <parameter name="url" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="updateCMSFields" start="18" end="22" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="fields" byreference="false" type="object">
+      <type full="\\FieldList" namespace="\" name="FieldList"/>
+    </parameter>
+  </method>
+  <method name="allPagesToCache" start="28" end="49" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Return a list of all the pages to cache"/>
+    </docblock>
+    <inline>
+      <comment value="Get each page type to define its sub-urls" line="29"/>
+      <comment value="memory intensive depending on number of pages" line="31"/>
+    </inline>
+  </method>
+  <method name="subPagesToCache" start="54" end="66" abstract="false" final="false" static="false" visibility="public">
+    <docblock>
+      <description compact="Get a list of URLs to cache related to this page"/>
+    </docblock>
+    <inline>
+      <comment value="add current page" line="57"/>
+      <comment value="cache the RSS feed if comments are enabled" line="60"/>
+    </inline>
+  </method>
+  <method name="pagesAffectedByChanges" start="68" end="74" abstract="false" final="false" static="false" visibility="public"/>
+</class>

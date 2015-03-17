@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://xml.phpdox.net/src" full="MenuCache" namespace="" name="MenuCache" abstract="false" final="false" start="3" end="82">
+  <file path="/var/www/_modules/menucache/trunk/docs/en/phpdox/../../../code" file="MenuCache.php" realpath="/var/www/_modules/menucache/trunk/code/MenuCache.php" size="4942" time="2015-03-14T10:23:09+13:00" unixtime="1426281789" sha1="cd313b361021e5878b4805a62d3900ae94d07ed8" relative="code/MenuCache.php"/>
+  <extends full="DataExtension" namespace="" name="DataExtension"/>
+  <member name="db" type="array" visibility="private" line="8">
+    <docblock>
+      <description compact="fields are typicall header, menu, footer"/>
+    </docblock>
+  </member>
+  <member name="fields" type="array" visibility="private" line="16"/>
+  <member name="layout_field" type="integer" default="3" visibility="private" line="25"/>
+  <member name="tables_to_clear" type="array" visibility="private" line="27"/>
+  <method name="field_maker" start="29" end="31" abstract="false" final="false" static="true" visibility="public">
+    <parameter name="fieldNumber" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="fields_exists" start="33" end="35" abstract="false" final="false" static="true" visibility="public">
+    <parameter name="number" byreference="false" type="{unknown}"/>
+  </method>
+  <method name="updateCMSFields" start="37" end="41" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="fields" byreference="false" type="object">
+      <type full="\\FieldList" namespace="\" name="FieldList"/>
+    </parameter>
+  </method>
+  <method name="clearfieldcache" start="45" end="73" abstract="false" final="false" static="false" visibility="public">
+    <parameter name="showoutput" byreference="false" type="{unknown}" default="false"/>
+  </method>
+  <method name="onBeforeWrite" start="76" end="79" abstract="false" final="false" static="false" visibility="public">
+    <inline>
+      <comment value="$this-&gt;clearfieldcache(); // technically this should be done, but it puts a lot of strain on saving so instead we encourage people to use ?flush=1" line="77"/>
+    </inline>
+  </method>
+</class>
