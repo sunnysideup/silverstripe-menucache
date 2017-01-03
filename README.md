@@ -1,140 +1,72 @@
+# Silverstripe menucache module
+[![Build Status](https://travis-ci.org/sunnysideup/silverstripe-menucache.svg?branch=master)](https://travis-ci.org/sunnysideup/silverstripe-menucache)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sunnysideup/silverstripe-menucache/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sunnysideup/silverstripe-menucache/?branch=master)
+[![codecov.io](https://codecov.io/github/sunnysideup/silverstripe-menucache/coverage.svg?branch=master)](https://codecov.io/github/sunnysideup/silverstripe-menucache?branch=master)
+![helpfulrobot](https://helpfulrobot.io/sunnysideup/menucache/badge)
 
-MenuCache
-================================================================================
-
-Allows you to cache parts of your website for
-faster rendering.  A typical example is a long menu
-which can be saved as a string of pre-prepared HTML
-in the database rather than compiled with every page
-requests. We found this module significantly increases
-the speed of our website.
-
-HOWEVER, Silverstripe also has its built in version of
-this concept which may be better.
-
-SEE:
-http://doc.silverstripe.org/framework/en/reference/partial-caching
+[![Latest Stable Version](https://poser.pugx.org/sunnysideup/menucache/version)](https://packagist.org/packages/sunnysideup/menucache)
+[![License](https://poser.pugx.org/sunnysideup/menucache/license)](https://packagist.org/packages/sunnysideup/menucache)
+[![Monthly Downloads](https://poser.pugx.org/sunnysideup/menucache/d/monthly)](https://packagist.org/packages/sunnysideup/menucache)
 
 
-Developer
------------------------------------------------
-Nicolaas Francken [at] sunnysideup.co.nz
+## Documentation
 
 
-Requirements
------------------------------------------------
-see composer.json
+
+ * [Developer Docs](docs/en/INDEX.md)
+ * [User Guide](docs/en/userguide.md)
+ * [API](http://ssmods.com/apis/menucache/docs/en/api/)
+
+## Requirements
 
 
-Documentation
------------------------------------------------
-Please contact author for more details.
 
-Any bug reports and/or feature requests will be
-looked at in detail
+see [composer.json](composer.json) for details
 
-We are also very happy to provide personalised support
-for this module in exchange for a small donation.
+### Suggested Modules
 
-This module allows you to cache the menu and other parts
-of your pages. You do this to reduce processing time. For example,
-if a menu includes all the pages on your website, then it will
-require significant time for PHP + DB to compile the menu.
 
-As a trade-off, it will increase the size of your database.
 
-The way it works is that, the first time, the page is opened,
-it will create the page as per usual.  The nex time, the page
-is opened it will then retrieve the "marked" parts from the database
-rather than creating them from the template.
+see [composer.json](composer.json) for details
 
-The first time a page is loaded, it will run the standard menu,
-while doing so, it saves the "marked" parts of the page (e.g. menu) to the database
-The way it saves it is as an extra field in the SiteTree table.
-Everytime the page is loaded after that, it will retrieve
-the cached sections (e.g. menu) as one big chunk of html.
 
-Everytime a page in SiteTree is saved, it will CLEAR all the
-saved menus and other saved parts.
+## Installation
 
-The code provides several flushing tricks:
-http://www.mysite.com/home/showcachedfield/[0-4]/?flush=1
-http://www.mysite.com/home/clearfieldcache/[0-4]/?flush=1
-http://www.mysite.com/home/showuncachedfield/[0-4]/?flush=1
-http://www.mysite.com/home/clearallfieldcaches/?flush=1
-http://www.mysite.com/home/clearallfieldcaches/days/100?flush=1 - clear caches created more than 100 days ago
-http://www.mysite.com/home/clearallfieldcaches/thispage/?flush=1 - clear caches for home page (or whatever page) only.
 
-Common things to cache are:
-* header / footer sections
-* menus
+```
+composer require sunnysideup/menucache
+```
 
-It will be particular useful in areas where you do
-a lot of processing and database accessing (e.g.
-building a LARGE menu).
+### Configuration
 
-You can have up to five cached areas on your pages.
 
-Installation Instructions
------------------------------------------------
-1. Find out how to add modules to SS and add module as per usual.
 
-2. Review configs and add entries to mysite/_config/config.yml
-(or similar) as necessary.
-In the _config/ folder of this module
-you can usually find some examples of config options (if any).
+In the `_config` folder you will find the `menucache.yml.example`
+file that shows options for the configuration of this module.
 
-3. setup the following files:
-/themes/mytheme_menucache/templates/Includes/CachedField0.ss
-/themes/mytheme_menucache/templates/Includes/CachedField1.ss
-/themes/mytheme_menucache/templates/Includes/CachedField2.ss
-/themes/mytheme_menucache/templates/Includes/CachedField3.ss
-/themes/mytheme_menucache/templates/Includes/CachedField4.ss
+We recommend that you:
 
-4. within each of these files, include the actual template you want to use
-e.g. add <% include Navigation %> to
-/themes/mytheme_menucache/templates/Includes/CachedField0.ss
+  1. copy these `menucache.yml.example` files into your
+`mysite/_config` folder
+  2. remove the .example extension
+  3. delete the lines you not care about, and
+  4. adjust the configurations that you would like to use.
 
-5. within /themes/templates/Page.ss (or wherever), add
-$CachedField([0-4]) to add your cached area.
-adding $CachedField(0) to your template will show
-Navigation.ss in the example above.
 
-6. Consider if there are any parts dataobject that need to include
-the "clear cache call" on before write. Those will be data objects
-that are cached on pages and shown as such.
+## Contributing
 
-*** NOTE: [0-4]: choose a number between 0 and 4, you can have up to
-five cached fields: 0, 1, 2, 3, and 4
 
------------------------ STATIC PUBLISHING -------------------------------
 
-example htaccess file (NOTE .php as the extension)
+We welcome any contributions. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
-also see: http://svn.silverstripe.com/open/modules/cms/trunk/code/staticpublisher/
------------------------------------------------
+## Paid assistance
 
-### SILVERSTRIPE START ###
-# Cached content -
-RewriteCond %{REQUEST_METHOD} ^GET$
-RewriteCond %{QUERY_STRING} ^$
-RewriteCond %{REQUEST_URI} ^/(.*)$
-RewriteCond %{REQUEST_URI} /(.*[^/])/?$
-RewriteCond %{DOCUMENT_ROOT}/cache/%1.php -f
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule .* /cache/%1.php [L]
 
-# Cached content - homepage
-RewriteCond %{REQUEST_METHOD} ^GET$
-RewriteCond %{QUERY_STRING} ^$
-RewriteCond %{REQUEST_URI} ^/?$
-RewriteCond /cache/index.php -f
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule .* /cache/index.php [L]
 
-# Dynamic content
-RewriteCond %{REQUEST_URI} !(\.gif)|(\.jpg)|(\.png)|(\.css)|(\.js)|(\.php)$
-RewriteCond %{REQUEST_URI} ^(.*)$
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule .* /sapphire/main.php?url=%1&%{QUERY_STRING} [L]
-### SILVERSTRIPE END ###
+You can pay us to create an improved / adapted version of this module for your own projects.  Please contact us if you like to find out more: [www.sunnysideup.co.nz](http://www.sunnysideup.co.nz)
+
+## Author
+
+
+
+Sunny Side Up Ltd.

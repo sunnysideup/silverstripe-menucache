@@ -1,8 +1,4 @@
 SiteTree:
-  extensions:
-    - MenuCache
-
+    extensions: [MenuCache]
 ContentController:
-  extensions:
-    - MenuCache_Controller
-
+    extensions: [MenuCache_Controller]
