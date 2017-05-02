@@ -15,7 +15,7 @@
 
  * [Developer Docs](docs/en/INDEX.md)
  * [User Guide](docs/en/userguide.md)
- * [API Docs](http://docs.ssmods.com/sunnysideup/menucache)
+ * [API Docs](http://docs.ssmods.com/sunnysideup/menucache/classes.xhtml)
 
 ## Requirements
 

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<index xmlns="http://xml.phpdox.net/src" basedir="/var/www/_modules/menucache/trunk">
-  <namespace name="">
-    <class name="MenuCacheStatic" src="code/MenuCacheStatic.php" xml="classes/MenuCacheStatic.xml"/>
-    <class name="MenuCache" src="code/MenuCache.php" xml="classes/MenuCache.xml"/>
-    <class name="MenuCache_Controller" src="code/MenuCache.php" xml="classes/MenuCache_Controller.xml"/>
-  </namespace>
-</index>
